@@ -16,7 +16,7 @@ const blogPosts = [
 
 export default function App() {
   return (
-    <BlogProvider value={blogPosts}>
+    <BlogProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{ headerTitle: 'Blogs', cardStyle: { backgroundColor: '#FFFFFF' } }}
