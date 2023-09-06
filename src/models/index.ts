@@ -5,3 +5,7 @@ export const SCREEN = {
 } as const;
 
 export type Screen = ObjectValues<typeof SCREEN>;
+
+export type BlogPost = {
+  title: string;
+}
