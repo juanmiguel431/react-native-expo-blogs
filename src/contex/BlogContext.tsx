@@ -1,21 +1,11 @@
 import React, { PropsWithChildren, Reducer, useReducer } from 'react';
 import { BlogPost } from '../models';
 import { BLOG_ACTION_TYPE, BlogActionType } from '../models/actions';
+import createDataContext from './createDataContext';
 
-type BlogContextType = {
-  state: ReducerState;
-  dispatch: React.Dispatch<ReducerAction>;
-}
-
-export const BlogContext = React.createContext<BlogContextType>({} as BlogContextType);
-
-type ReducerState = {
-  data: BlogPost[];
-}
-
-type ReducerAction = {
-  type: BlogActionType;
-}
+type ReducerState = { data: BlogPost[] }
+type ReducerAction = { type: BlogActionType }
+type ActionType<A> = (dispatch: React.Dispatch<A>) => () => void;
 
 const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -26,6 +16,10 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   }
 }
 
+
+type BlogContextType = { state: ReducerState; dispatch: React.Dispatch<ReducerAction>; }
+export const BlogContext = React.createContext<BlogContextType>({} as BlogContextType);
+
 export const BlogProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, { data: [] });
 
@@ -35,4 +29,13 @@ export const BlogProvider: React.FC<PropsWithChildren> = ({ children }) => {
     </BlogContext.Provider>
   );
 };
-export const BlogConsumer = BlogContext.Consumer;
+
+
+
+// const addBlogPost: ActionType<ReducerAction> = (dispatch) => {
+//   return () => {
+//     dispatch({ type: BLOG_ACTION_TYPE.Add })
+//   }
+// }
+//
+// export const { Context: BlogContext , Provider: BlogProvider } = createDataContext(blogReducer, { addBlogPost }, { data: [] });
