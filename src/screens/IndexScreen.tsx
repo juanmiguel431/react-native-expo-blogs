@@ -54,7 +54,7 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   addNew: {
     fontSize: 30,
-    marginRight: 20
+    paddingRight: 25
   },
   icon: {
     fontSize: 24
