@@ -4,8 +4,9 @@ import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
 import { Feather } from '@expo/vector-icons'
+import { SCREEN } from '../models';
 
-const IndexScreen: React.FC<IndexScreenProps> = () => {
+const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
   const { state: { data }, dispatch } = useContext(BlogContext);
 
   return (
@@ -19,7 +20,11 @@ const IndexScreen: React.FC<IndexScreenProps> = () => {
         keyExtractor={item => item.title}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <Text style={styles.title}>{item.title} - {item.id}</Text>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate(SCREEN.Show, { id: item.id });
+            }}>
+              <Text style={styles.title}>{item.title}</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: item.id });
             }}>

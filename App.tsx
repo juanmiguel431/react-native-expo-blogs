@@ -1,18 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SCREEN } from './src/models';
-import IndexScreen from './src/screens/IndexScreen';
-
 import { RootStackParamList } from './src/models/screen';
 import { BlogProvider } from './src/context/BlogContext';
+import { SCREEN } from './src/models';
+import IndexScreen from './src/screens/IndexScreen';
+import ShowScreen from './src/screens/ShowScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
-
-const blogPosts = [
-  { title: 'Blog Post #1' },
-  { title: 'Blog Post #2' },
-];
-
 
 export default function App() {
   return (
@@ -22,6 +16,7 @@ export default function App() {
           screenOptions={{ headerTitle: 'Blogs', cardStyle: { backgroundColor: '#FFFFFF' } }}
           initialRouteName={SCREEN.Index}>
           <Stack.Screen name={SCREEN.Index} component={IndexScreen}/>
+          <Stack.Screen name={SCREEN.Show} component={ShowScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>
