@@ -17,10 +17,11 @@ const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
       />
       <FlatList
         data={data}
-        keyExtractor={item => item.title}
+        keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={styles.row}>
             <TouchableOpacity onPress={() => {
+              // navigation.removeListener();
               navigation.navigate(SCREEN.Show, { id: item.id });
             }}>
               <Text style={styles.title}>{item.title}</Text>
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingLeft: 10,
+    paddingRight: 25,
     paddingVertical: 20
   },
   title: {

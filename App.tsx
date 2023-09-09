@@ -5,6 +5,13 @@ import { BlogProvider } from './src/context/BlogContext';
 import { SCREEN } from './src/models';
 import IndexScreen from './src/screens/IndexScreen';
 import ShowScreen from './src/screens/ShowScreen';
+import { Animated } from "react-native";
+
+const av = new Animated.Value(0);
+av.addListener(() => {
+  console.log('JMPC');
+  return;
+});
 
 const Stack = createStackNavigator<RootStackParamList>();
 
