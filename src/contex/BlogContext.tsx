@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, Reducer, useReducer } from 'react';
+import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react';
 import { BlogPost } from '../models';
 import { BLOG_ACTION_TYPE, BlogActionType } from '../models/actions';
 import createDataContext, { ActionType, ActionTypes } from './createDataContext';
@@ -39,4 +39,8 @@ const actions: ActionTypes<ReducerAction> = { addBlogPost };
 export const {
   Context: BlogContextF ,
   Provider: BlogProviderF
-} = createDataContext(blogReducer, actions, { data: [] });
+} = createDataContext<typeof actions, ReducerState, ReducerAction>(blogReducer, actions, { data: [] });
+
+const Test = () => {
+  const { state,  } = useContext(BlogContextF);
+}
