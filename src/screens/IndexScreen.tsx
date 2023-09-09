@@ -6,7 +6,7 @@ import { BLOG_ACTION_TYPE } from '../models/actions';
 import { Feather } from '@expo/vector-icons'
 import { SCREEN } from '../models';
 
-const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
+export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
   const { state: { data }, dispatch } = useContext(BlogContext);
 
   return (

@@ -3,8 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from './src/models/screen';
 import { BlogProvider } from './src/context/BlogContext';
 import { SCREEN } from './src/models';
-import IndexScreen from './src/screens/IndexScreen';
-import ShowScreen from './src/screens/ShowScreen';
+import { IndexScreen, ShowScreen, CreateScreen } from './src/screens';
 import { Animated } from 'react-native';
 
 const av = new Animated.Value(0);
@@ -21,6 +20,7 @@ export default function App() {
           initialRouteName={SCREEN.Index}>
           <Stack.Screen name={SCREEN.Index} component={IndexScreen}/>
           <Stack.Screen name={SCREEN.Show} component={ShowScreen}/>
+          <Stack.Screen name={SCREEN.Create} component={CreateScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>
