@@ -4,8 +4,14 @@ import { BlogPost } from '../models';
 import { BLOG_ACTION_TYPE, BlogActionType } from '../models/actions';
 import createDataContext, { ActionType, ActionTypes } from './createDataContext';
 
-type ReducerState = { data: BlogPost[] }
-type ReducerAction = { type: BlogActionType }
+type ReducerState = { data: BlogPost[] };
+type ReducerAction = AddAction | DeleteAction;
+
+type AddAction = { type: 'Add' };
+type DeleteAction = {
+  type: 'Delete',
+  payload: string
+};
 
 const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -14,6 +20,9 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
         id: uuid.v4().toString(),
         title: `Blog Post #${state.data.length + 1}`
       }] }
+    case BLOG_ACTION_TYPE.Delete:{
+      return { ...state, data: state.data.filter(p => p.id !== action.payload) }
+    }
     default:
       return state;
   }

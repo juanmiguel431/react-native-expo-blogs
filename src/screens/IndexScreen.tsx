@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../contex/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
@@ -19,8 +19,12 @@ const IndexScreen: React.FC<IndexScreenProps> = () => {
         keyExtractor={item => item.title}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Feather name="trash" style={styles.icon}/>
+            <Text style={styles.title}>{item.title} - {item.id}</Text>
+            <TouchableOpacity onPress={() => {
+              dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: item.id });
+            }}>
+              <Feather name="trash" style={styles.icon}/>
+            </TouchableOpacity>
           </View>
         )}
       />
