@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
@@ -8,6 +8,19 @@ import { SCREEN } from '../models';
 
 export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
   const { state: { data }, dispatch } = useContext(BlogContext);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(SCREEN.Create);
+          }}>
+          <Feather name="plus" style={styles.addNew}/>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View>
@@ -39,6 +52,10 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  addNew: {
+    fontSize: 30,
+    marginRight: 20
+  },
   icon: {
     fontSize: 24
   },

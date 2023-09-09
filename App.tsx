@@ -7,7 +7,8 @@ import { IndexScreen, ShowScreen, CreateScreen } from './src/screens';
 import { Animated } from 'react-native';
 
 const av = new Animated.Value(0);
-av.addListener(() => {});
+av.addListener(() => {
+});
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -16,11 +17,11 @@ export default function App() {
     <BlogProvider>
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{ headerTitle: 'Blogs', cardStyle: { backgroundColor: '#FFFFFF' } }}
+          screenOptions={{ cardStyle: { backgroundColor: '#FFFFFF' } }}
           initialRouteName={SCREEN.Index}>
-          <Stack.Screen name={SCREEN.Index} component={IndexScreen}/>
-          <Stack.Screen name={SCREEN.Show} component={ShowScreen}/>
-          <Stack.Screen name={SCREEN.Create} component={CreateScreen}/>
+          <Stack.Screen name={SCREEN.Index} component={IndexScreen} options={{ title: 'Blogs'}}/>
+          <Stack.Screen name={SCREEN.Show} component={ShowScreen} options={{ title: 'Detail'}}/>
+          <Stack.Screen name={SCREEN.Create} component={CreateScreen} options={{ title: 'Create'}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>
