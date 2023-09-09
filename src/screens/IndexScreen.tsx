@@ -24,10 +24,6 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
 
   return (
     <View>
-      <Button
-        title="Add Blog"
-        onPress={() => dispatch({ type: BLOG_ACTION_TYPE.Add })}
-      />
       <FlatList
         data={data}
         keyExtractor={item => item.id}
