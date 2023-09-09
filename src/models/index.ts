@@ -7,5 +7,6 @@ export const SCREEN = {
 export type Screen = ObjectValues<typeof SCREEN>;
 
 export type BlogPost = {
+  id: string;
   title: string;
 }

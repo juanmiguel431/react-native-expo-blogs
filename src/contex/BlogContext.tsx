@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react';
+import uuid from 'react-native-uuid';
 import { BlogPost } from '../models';
 import { BLOG_ACTION_TYPE, BlogActionType } from '../models/actions';
 import createDataContext, { ActionType, ActionTypes } from './createDataContext';
@@ -9,7 +10,10 @@ type ReducerAction = { type: BlogActionType }
 const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case BLOG_ACTION_TYPE.Add:
-      return { ...state, data: [...state.data, { title: `Blog Post #${state.data.length + 1}` }] }
+      return { ...state, data: [...state.data, {
+        id: uuid.v4().toString(),
+        title: `Blog Post #${state.data.length + 1}`
+      }] }
     default:
       return state;
   }
