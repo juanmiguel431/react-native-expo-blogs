@@ -17,7 +17,7 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({ route,navigation }) 
       <TextInput value={title} onChangeText={setTitle} style={styles.input}/>
       <Text style={styles.label}>Enter Content:</Text>
       <TextInput value={content} onChangeText={setContent} style={styles.input}/>
-      <Button title="Add Blog Post" onPress={() => {
+      <Button title="Save" onPress={() => {
         if (!(title && content)) {
           return;
         }

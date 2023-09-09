@@ -18,6 +18,7 @@ export const ShowScreen: React.FC<ShowScreenProps> = ({ route}) => {
     <View>
       <Text>Show Screen</Text>
       <Text>{blog.title}</Text>
+      <Text>{blog.content}</Text>
     </View>
   )
 };
