@@ -4,7 +4,7 @@ import { SCREEN } from './src/models';
 import IndexScreen from './src/screens/IndexScreen';
 
 import { RootStackParamList } from './src/models/screen';
-import { BlogProvider } from './src/contex/BlogContext';
+import { BlogProvider } from './src/context/BlogContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

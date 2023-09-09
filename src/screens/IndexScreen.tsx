@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { IndexScreenProps } from '../models/screen';
-import { BlogContext } from '../contex/BlogContext';
+import { BlogContext } from '../context/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
 import { Feather } from '@expo/vector-icons'
 
