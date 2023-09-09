@@ -1,13 +1,18 @@
 import React, { PropsWithChildren, useReducer } from 'react';
 
-type ActionType<A> = (dispatch: React.Dispatch<A>) => () => void;
-type ActionTypes<A> = Record<string, ActionType<A>>
+export type BoundedAction = () => void;
+export type BoundedActions = Record<string, BoundedAction>;
 
-type BoundedAction = () => void;
-type BoundedActions = Record<string, BoundedAction>;
+export type ActionType<A = any> = (dispatch: React.Dispatch<A>) => BoundedAction;
+export type ActionTypes<A> = Record<string, ActionType<A>>
+
+type ExtractBoundedAction<A> = A extends ActionType ? ReturnType<A> : never;
+
 
 //Alternative 1
-type ContextStateType<S> = { state: S } & Record<string, BoundedAction | S>;
+// type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<string, BoundedAction | S>;
+// type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<keyof R, ExtractBoundedAction<R[keyof R]>>;
+type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<keyof R, ReturnType<R[keyof R]>>;
 
 //Alternative 2
 // interface ContextStateType<S> {
@@ -20,8 +25,8 @@ type ContextStateType<S> = { state: S } & Record<string, BoundedAction | S>;
 //   state: S;
 // }
 
-export default <S,A>(reducer: React.Reducer<S, A>, actions: ActionTypes<A>, initialState: S) => {
-  const Context = React.createContext<ContextStateType<S>>({} as ContextStateType<S>);
+export default <S,A,R extends ActionTypes<A>>(reducer: React.Reducer<S, A>, actions: R, initialState: S) => {
+  const Context = React.createContext<ContextStateType<S,A,R>>({} as ContextStateType<S,A,R>);
 
   const Provider: React.FC<PropsWithChildren> = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -31,8 +36,13 @@ export default <S,A>(reducer: React.Reducer<S, A>, actions: ActionTypes<A>, init
       boundsActions[key] = actions[key](dispatch);
     }
 
+    const contextValue: ContextStateType<S, A, R> = {
+      state: state,
+      ...boundsActions,
+    };
+
     return (
-      <Context.Provider value={{ state: state, ...boundsActions }}>
+      <Context.Provider value={contextValue}>
         {children}
       </Context.Provider>
     );
