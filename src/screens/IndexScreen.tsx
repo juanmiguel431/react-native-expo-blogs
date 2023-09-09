@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Button, FlatList, Text, View } from 'react-native';
-import { HomeScreenProps } from '../models/screen';
+import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../contex/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const IndexScreen: React.FC<IndexScreenProps> = () => {
   const { state: { data }, dispatch } = useContext(BlogContext);
 
   return (
@@ -25,4 +25,4 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   )
 };
 
-export default HomeScreen;
+export default IndexScreen;

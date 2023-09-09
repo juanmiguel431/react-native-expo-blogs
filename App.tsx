@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SCREEN } from './src/models';
-import HomeScreen from './src/screens/HomeScreen';
+import IndexScreen from './src/screens/IndexScreen';
 
 import { RootStackParamList } from './src/models/screen';
 import { BlogProvider } from './src/contex/BlogContext';
@@ -21,7 +21,7 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{ headerTitle: 'Blogs', cardStyle: { backgroundColor: '#FFFFFF' } }}
           initialRouteName={SCREEN.Home}>
-          <Stack.Screen name={SCREEN.Home} component={HomeScreen}/>
+          <Stack.Screen name={SCREEN.Home} component={IndexScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>

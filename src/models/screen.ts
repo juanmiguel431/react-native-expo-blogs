@@ -3,10 +3,10 @@ import type { RouteProp } from '@react-navigation/native';
 import { SCREEN } from './index';
 
 export type RootStackParamList = {
-  [SCREEN.Home]: undefined;
+  [SCREEN.Index]: undefined;
 };
 
-export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+export type IndexScreenProps = NativeStackScreenProps<RootStackParamList, 'Index'>;
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 export type RouteProps = RouteProp<RootStackParamList>;

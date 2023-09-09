@@ -1,7 +1,7 @@
 type ObjectValues<T> = T[keyof T];
 
 export const SCREEN = {
-  Home: 'Home',
+  Index: 'Index',
 } as const;
 
 export type Screen = ObjectValues<typeof SCREEN>;
