@@ -20,8 +20,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{ headerTitle: 'Blogs', cardStyle: { backgroundColor: '#FFFFFF' } }}
-          initialRouteName={SCREEN.Home}>
-          <Stack.Screen name={SCREEN.Home} component={IndexScreen}/>
+          initialRouteName={SCREEN.Index}>
+          <Stack.Screen name={SCREEN.Index} component={IndexScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>
