@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
@@ -24,6 +25,7 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
 
   return (
     <View>
+      <StatusBar style="auto" />
       <FlatList
         data={data}
         keyExtractor={item => item.id}
