@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { CreateScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
-import { SCREEN } from '../models';
 import BlogForm from '../components/BlogForm';
 
 export const CreateScreen: React.FC<CreateScreenProps> = ({ route,navigation }) => {
@@ -13,7 +12,7 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({ route,navigation }) 
     <BlogForm
       onSave={({ title, content }) => {
         dispatch({ type: BLOG_ACTION_TYPE.Add, payload: { title, content} });
-        navigation.navigate(SCREEN.Index);
+        navigation.goBack();
       }}
     />
   )

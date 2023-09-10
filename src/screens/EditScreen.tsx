@@ -4,7 +4,6 @@ import { EditScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import BlogForm from '../components/BlogForm';
 import { BLOG_ACTION_TYPE } from '../models/actions';
-import { SCREEN } from '../models';
 
 export const EditScreen: React.FC<EditScreenProps> = ({ route, navigation}) => {
   const { state: { data }, dispatch } = useContext(BlogContext);
@@ -22,7 +21,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ route, navigation}) => {
       blog={blog}
       onSave={({ title, content }) => {
         dispatch({ type: BLOG_ACTION_TYPE.Edit, payload: { id, title, content} });
-        navigation.navigate(SCREEN.Show, { id: id });
+        navigation.goBack();
       }}
     />
   )
