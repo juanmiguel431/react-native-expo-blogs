@@ -2,15 +2,15 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
 import { BlogFormModel } from '../models';
 
-
 type BlogFormProps = {
   initialValues?: BlogFormModel;
   onSubmit: (blog: BlogFormModel) => void;
 }
 
-export const BlogForm: React.FC<BlogFormProps> = ({ initialValues, onSubmit}) => {
-  const [title, setTitle] = useState(initialValues?.title || '');
-  const [content, setContent] = useState(initialValues?.content || '');
+export const BlogForm: React.FC<BlogFormProps> = ({ initialValues= { title: '', content: '' }, onSubmit}) => {
+
+  const [title, setTitle] = useState(initialValues.title || '');
+  const [content, setContent] = useState(initialValues.content || '');
 
   return (
     <View style={styles.container}>
@@ -28,13 +28,6 @@ export const BlogForm: React.FC<BlogFormProps> = ({ initialValues, onSubmit}) =>
     </View>
   );
 };
-
-BlogForm.defaultProps = {
-  initialValues: {
-    title: '',
-    content: '',
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
