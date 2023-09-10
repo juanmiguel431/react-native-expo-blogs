@@ -21,7 +21,7 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
     case BLOG_ACTION_TYPE.Edit: {
       const data = state.data.map(d => {
         if (d.id === action.payload.id) {
-          return { ...action.payload };
+          return { ...d, ...action.payload };
         }
         return d;
       })
