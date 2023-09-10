@@ -16,12 +16,9 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
     case BLOG_ACTION_TYPE.Add:
       return { ...state, data: [...state.data, { ...action.payload, id: uuid.v4().toString() }] };
     case BLOG_ACTION_TYPE.Edit: {
-      const data = state.data.map(d => {
-        if (d.id === action.payload.id) {
-          return { ...d, ...action.payload };
-        }
-        return d;
-      })
+      const data = state.data.map(p => {
+        return p.id === action.payload.id ? { ...p, ...action.payload } : p;
+      });
       return { ...state, data: data };
     }
     case BLOG_ACTION_TYPE.Delete:{
