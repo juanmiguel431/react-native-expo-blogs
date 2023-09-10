@@ -14,3 +14,5 @@ export type BlogPost = {
   title: string;
   content: string;
 }
+
+export type BlogFormModel = Omit<BlogPost, 'id'>

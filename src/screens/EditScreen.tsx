@@ -18,8 +18,8 @@ export const EditScreen: React.FC<EditScreenProps> = ({ route, navigation}) => {
 
   return (
     <BlogForm
-      blog={blog}
-      onSave={({ title, content }) => {
+      initialValues={blog}
+      onSubmit={({ title, content }) => {
         dispatch({ type: BLOG_ACTION_TYPE.Edit, payload: { id, title, content} });
         navigation.goBack();
       }}

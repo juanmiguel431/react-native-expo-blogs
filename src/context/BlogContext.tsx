@@ -1,13 +1,13 @@
 import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react';
 import uuid from 'react-native-uuid';
-import { BlogPost } from '../models';
+import { BlogFormModel, BlogPost } from '../models';
 import { BLOG_ACTION_TYPE } from '../models/actions';
 import createDataContext, { ActionType, ActionTypes } from './createDataContext';
 
 type ReducerState = { data: BlogPost[] };
 type ReducerAction = AddAction | DeleteAction | EditAction;
 
-type AddAction = { type: 'Add', payload: Partial<BlogPost> };
+type AddAction = { type: 'Add', payload: BlogFormModel };
 type EditAction = { type: 'Edit', payload: BlogPost };
 type DeleteAction = { type: 'Delete', payload: string };
 
@@ -47,7 +47,7 @@ export const BlogProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 const addBlogPost: ActionType<ReducerAction> = (dispatch) => {
   return () => {
-    dispatch({ type: BLOG_ACTION_TYPE.Add })
+    dispatch({ type: BLOG_ACTION_TYPE.Add, payload: { title: '', content: ''} })
   }
 }
 

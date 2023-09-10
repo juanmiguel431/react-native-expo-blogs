@@ -10,7 +10,7 @@ export const CreateScreen: React.FC<CreateScreenProps> = ({ route,navigation }) 
 
   return (
     <BlogForm
-      onSave={({ title, content }) => {
+      onSubmit={({ title, content }) => {
         dispatch({ type: BLOG_ACTION_TYPE.Add, payload: { title, content} });
         navigation.goBack();
       }}
