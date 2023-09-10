@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { Button, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import { BLOG_ACTION_TYPE } from '../models/actions';
-import { Feather } from '@expo/vector-icons'
+import { EvilIcons, Feather } from '@expo/vector-icons'
 import { SCREEN } from '../models';
 
 export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
@@ -35,11 +35,16 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
             }}>
               <Text style={styles.title}>{item.title}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: item.id });
-            }}>
-              <Feather name="trash" style={styles.icon}/>
-            </TouchableOpacity>
+            <View style={styles.actionContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate(SCREEN.Edit, { id: item.id })}>
+                <EvilIcons name="pencil" style={styles.editIcon}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: item.id });
+              }}>
+                <Feather name="trash" style={styles.deleteIcon}/>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
@@ -48,12 +53,20 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  actionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 120
+  },
   addNew: {
     fontSize: 30,
     paddingRight: 25
   },
-  icon: {
+  deleteIcon: {
     fontSize: 24
+  },
+  editIcon: {
+    fontSize: 35
   },
   row: {
     borderColor: 'gray',

@@ -1,18 +1,15 @@
 import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react';
 import uuid from 'react-native-uuid';
 import { BlogPost } from '../models';
-import { BLOG_ACTION_TYPE, BlogActionType } from '../models/actions';
+import { BLOG_ACTION_TYPE } from '../models/actions';
 import createDataContext, { ActionType, ActionTypes } from './createDataContext';
 
 type ReducerState = { data: BlogPost[] };
 type ReducerAction = AddAction | DeleteAction | EditAction;
 
-type AddAction = { type: 'Add', payload: BlogPost };
+type AddAction = { type: 'Add', payload: Partial<BlogPost> };
 type EditAction = { type: 'Edit', payload: BlogPost };
-type DeleteAction = {
-  type: 'Delete',
-  payload: string
-};
+type DeleteAction = { type: 'Delete', payload: string };
 
 const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
