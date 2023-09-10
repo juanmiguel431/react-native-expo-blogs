@@ -18,14 +18,15 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case BLOG_ACTION_TYPE.Add:
       return { ...state, data: [...state.data, { ...action.payload, id: uuid.v4().toString() }] };
-    case BLOG_ACTION_TYPE.Edit:
+    case BLOG_ACTION_TYPE.Edit: {
       const data = state.data.map(d => {
         if (d.id === action.payload.id) {
-          return action.payload;
+          return { ...action.payload };
         }
         return d;
       })
       return { ...state, data: data };
+    }
     case BLOG_ACTION_TYPE.Delete:{
       return { ...state, data: state.data.filter(p => p.id !== action.payload) };
     }
