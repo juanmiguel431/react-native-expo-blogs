@@ -1,29 +1,12 @@
 import React, { PropsWithChildren, useReducer } from 'react';
 
-export type BoundedAction = () => void;
+export type BoundedAction = (...arg: any) => void;
 export type BoundedActions = Record<string, BoundedAction>;
 
 export type ActionType<A> = (dispatch: React.Dispatch<A>) => BoundedAction;
 export type ActionTypes<A> = Record<string, ActionType<A>>
 
-type ExtractBoundedAction<A> = A extends ActionType<any> ? ReturnType<A> : never;
-
-//Alternative 1
-// type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<string, BoundedAction | S>;
-// type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<keyof R, ExtractBoundedAction<R[keyof R]>>;
-// type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & Record<keyof R, ReturnType<R[keyof R]>>;
-type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & { [K in keyof R]: R[K] extends ActionType<A> ? ReturnType<R[K]> : never };
-
-//Alternative 2
-// interface ContextStateType<S> {
-//   state: S;
-//   [key: string]: BoundedAction | S;
-// }
-
-//Alternative 3
-// interface ContextStateType<S> extends Record<string, BoundedAction | S> {
-//   state: S;
-// }
+type ContextStateType<S,A,R extends ActionTypes<A>> = { state: S } & { [K in keyof R]: ReturnType<R[K]> };
 
 export default <R extends ActionTypes<A>,S,A>(reducer: React.Reducer<S, A>, actions: R, initialState: S) => {
   const Context = React.createContext<ContextStateType<S,A,R>>({} as ContextStateType<S,A,R>);
@@ -36,10 +19,10 @@ export default <R extends ActionTypes<A>,S,A>(reducer: React.Reducer<S, A>, acti
       boundsActions[key] = actions[key](dispatch);
     }
 
-    const contextValue: ContextStateType<S, A, R> = {
+    const contextValue = {
       state: state,
       ...boundsActions,
-    };
+    } as ContextStateType<S, A, R>;
 
     return (
       <Context.Provider value={contextValue}>

@@ -2,7 +2,8 @@ import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react
 import uuid from 'react-native-uuid';
 import { BlogFormModel, BlogPost } from '../models';
 import { BLOG_ACTION_TYPE } from '../models/actions';
-import createDataContext, { ActionType, ActionTypes } from './createDataContext';
+import createDataContext, { ActionType } from './createDataContext';
+import jsonServer from '../apis/jsonServer';
 
 type ReducerState = { data: BlogPost[] };
 type ReducerAction = AddAction | DeleteAction | EditAction;
@@ -30,31 +31,41 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
 }
 
 type BlogContextType = { state: ReducerState; dispatch: React.Dispatch<ReducerAction>; }
-export const BlogContext = React.createContext<BlogContextType>({} as BlogContextType);
+export const BlogContextO = React.createContext<BlogContextType>({} as BlogContextType);
 
-export const BlogProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const BlogProviderO: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, { data: [] });
 
   return (
-    <BlogContext.Provider value={{ state: state, dispatch: dispatch }}>
+    <BlogContextO.Provider value={{ state: state, dispatch: dispatch }}>
       {children}
-    </BlogContext.Provider>
+    </BlogContextO.Provider>
   );
 };
 
-const addBlogPost: ActionType<ReducerAction> = (dispatch) => {
-  return () => {
-    dispatch({ type: BLOG_ACTION_TYPE.Add, payload: { title: '', content: ''} })
+const addBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
+  return (blog: BlogFormModel) => {
+    dispatch({ type: BLOG_ACTION_TYPE.Add, payload: blog })
   }
-}
+};
 
-const actions: ActionTypes<ReducerAction> = { addBlogPost };
+const editBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
+  return (blog: BlogPost) => {
+    dispatch({ type: BLOG_ACTION_TYPE.Edit, payload: blog })
+  }
+};
+
+const deleteBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
+  return (id: string) => {
+    dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: id })
+  }
+};
+
+const actions = {
+  addBlogPost, editBlogPost, deleteBlogPost
+};
 
 export const {
-  Context: BlogContextF ,
-  Provider: BlogProviderF
-} = createDataContext<typeof actions, ReducerState, ReducerAction>(blogReducer, actions, { data: [] });
-
-const Test = () => {
-  const { state,  } = useContext(BlogContextF);
-}
+  Context: BlogContext ,
+  Provider: BlogProvider
+} = createDataContext(blogReducer, actions, { data: [] });

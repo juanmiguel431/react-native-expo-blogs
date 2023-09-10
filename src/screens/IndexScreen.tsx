@@ -3,12 +3,11 @@ import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 import { StatusBar } from 'expo-status-bar';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
-import { BLOG_ACTION_TYPE } from '../models/actions';
 import { EvilIcons, Feather } from '@expo/vector-icons'
 import { SCREEN } from '../models';
 
 export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
-  const { state: { data }, dispatch } = useContext(BlogContext);
+  const { state: { data }, deleteBlogPost } = useContext(BlogContext);
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,7 +41,7 @@ export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
                 <EvilIcons name="pencil" style={styles.editIcon}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: item.id });
+                deleteBlogPost(item.id);
               }}>
                 <Feather name="trash" style={styles.deleteIcon}/>
               </TouchableOpacity>
