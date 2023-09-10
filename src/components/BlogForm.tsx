@@ -13,9 +13,9 @@ export const BlogForm: React.FC<BlogFormProps> = ({ blog, onSave}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Enter Title:</Text>
+      <Text style={styles.label}>Title:</Text>
       <TextInput value={title} onChangeText={setTitle} style={styles.input}/>
-      <Text style={styles.label}>Enter Content:</Text>
+      <Text style={styles.label}>Content:</Text>
       <TextInput value={content} onChangeText={setContent} style={styles.input}/>
       <Button title="Save" onPress={() => {
         if (!(title && content)) {
