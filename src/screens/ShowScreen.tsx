@@ -1,12 +1,28 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ShowScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
+import { SCREEN } from '../models';
+import { EvilIcons } from '@expo/vector-icons';
 
-export const ShowScreen: React.FC<ShowScreenProps> = ({ route}) => {
+export const ShowScreen: React.FC<ShowScreenProps> = ({ route, navigation}) => {
   const { state: { data }, dispatch } = useContext(BlogContext);
+  const id = route.params.id;
 
-  const blog = data.find(p => p.id === route.params.id);
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(SCREEN.Edit, { id: id });
+          }}>
+          <EvilIcons name="pencil" style={styles.edit}/>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, id]);
+
+  const blog = data.find(p => p.id === id);
 
   if (blog === undefined) {
     return (
@@ -23,6 +39,11 @@ export const ShowScreen: React.FC<ShowScreenProps> = ({ route}) => {
   )
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  edit: {
+    fontSize: 30,
+    paddingRight: 25
+  },
+});
 
 export default ShowScreen;

@@ -2,6 +2,7 @@ type ObjectValues<T> = T[keyof T];
 
 export const BLOG_ACTION_TYPE = {
   Add: 'Add',
+  Edit: 'Edit',
   Delete: 'Delete'
 } as const;
 
