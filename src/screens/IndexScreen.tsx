@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     paddingRight: 25
   },
   deleteIcon: {
-    fontSize: 24
+    fontSize: 27
   },
   editIcon: {
     fontSize: 35
