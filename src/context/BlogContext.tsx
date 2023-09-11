@@ -6,14 +6,17 @@ import createDataContext, { ActionType } from './createDataContext';
 import jsonServer from '../apis/jsonServer';
 
 type ReducerState = { data: BlogPost[] };
-type ReducerAction = AddAction | DeleteAction | EditAction;
+type ReducerAction = AddAction | DeleteAction | EditAction | GetAction;
 
+type GetAction = { type: 'Get', payload: BlogPost[] };
 type AddAction = { type: 'Add', payload: BlogFormModel };
 type EditAction = { type: 'Edit', payload: BlogPost };
 type DeleteAction = { type: 'Delete', payload: string };
 
 const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
+    case BLOG_ACTION_TYPE.Get:
+      return { ...state, data: action.payload };
     case BLOG_ACTION_TYPE.Add:
       return { ...state, data: [...state.data, { ...action.payload, id: uuid.v4().toString() }] };
     case BLOG_ACTION_TYPE.Edit: {
@@ -43,6 +46,13 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
 //   );
 // };
 
+const getBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
+  return async () => {
+    const response = await jsonServer.get<BlogPost[]>('/blogposts');
+    dispatch({ type: BLOG_ACTION_TYPE.Get, payload: response.data })
+  }
+};
+
 const addBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
   return (blog: BlogFormModel) => {
     dispatch({ type: BLOG_ACTION_TYPE.Add, payload: blog })
@@ -62,7 +72,7 @@ const deleteBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
 };
 
 const actions = {
-  addBlogPost, editBlogPost, deleteBlogPost
+  addBlogPost, editBlogPost, deleteBlogPost, getBlogPost
 };
 
 export const {

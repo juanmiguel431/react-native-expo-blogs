@@ -7,7 +7,11 @@ import { EvilIcons, Feather } from '@expo/vector-icons'
 import { SCREEN } from '../models';
 
 export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
-  const { state: { data }, deleteBlogPost } = useContext(BlogContext);
+  const { state: { data }, deleteBlogPost, getBlogPost } = useContext(BlogContext);
+
+  useEffect(() => {
+    getBlogPost();
+  }, [getBlogPost]);
 
   useEffect(() => {
     navigation.setOptions({
