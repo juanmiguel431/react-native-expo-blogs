@@ -30,18 +30,18 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   }
 }
 
-type BlogContextType = { state: ReducerState; dispatch: React.Dispatch<ReducerAction>; }
-export const BlogContextO = React.createContext<BlogContextType>({} as BlogContextType);
-
-export const BlogProviderO: React.FC<PropsWithChildren> = ({ children }) => {
-  const [state, dispatch] = useReducer(blogReducer, { data: [] });
-
-  return (
-    <BlogContextO.Provider value={{ state: state, dispatch: dispatch }}>
-      {children}
-    </BlogContextO.Provider>
-  );
-};
+// type BlogContextType = { state: ReducerState; dispatch: React.Dispatch<ReducerAction>; }
+// export const BlogContext = React.createContext<BlogContextType>({} as BlogContextType);
+//
+// export const BlogProvider: React.FC<PropsWithChildren> = ({ children }) => {
+//   const [state, dispatch] = useReducer(blogReducer, { data: [] });
+//
+//   return (
+//     <BlogContext.Provider value={{ state: state, dispatch: dispatch }}>
+//       {children}
+//     </BlogContext.Provider>
+//   );
+// };
 
 const addBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
   return (blog: BlogFormModel) => {
