@@ -6,7 +6,7 @@ import { SCREEN } from '../models';
 import { EvilIcons } from '@expo/vector-icons';
 
 export const ShowScreen: React.FC<ShowScreenProps> = ({ route, navigation}) => {
-  const { state: { data }, dispatch } = useContext(BlogContext);
+  const { state: { data } } = useContext(BlogContext);
   const id = route.params.id;
 
   useEffect(() => {
