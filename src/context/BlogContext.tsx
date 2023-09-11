@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, Reducer, useContext, useReducer } from 'react';
-import uuid from 'react-native-uuid';
 import { BlogFormModel, BlogPost } from '../models';
 import { BLOG_ACTION_TYPE } from '../models/actions';
 import createDataContext, { ActionType } from './createDataContext';
@@ -17,17 +16,8 @@ const blogReducer: Reducer<ReducerState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case BLOG_ACTION_TYPE.Get:
       return { ...state, data: action.payload };
-    case BLOG_ACTION_TYPE.Add:
-      return { ...state, data: [...state.data, { ...action.payload, id: uuid.v4().toString() }] };
-    case BLOG_ACTION_TYPE.Edit: {
-      const data = state.data.map(p => {
-        return p.id === action.payload.id ? { ...p, ...action.payload } : p;
-      });
-      return { ...state, data: data };
-    }
-    case BLOG_ACTION_TYPE.Delete:{
+    case BLOG_ACTION_TYPE.Delete:
       return { ...state, data: state.data.filter(p => p.id !== action.payload) };
-    }
     default:
       return state;
   }
@@ -54,20 +44,21 @@ const getBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
 };
 
 const addBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
-  return (blog: BlogFormModel) => {
-    dispatch({ type: BLOG_ACTION_TYPE.Add, payload: blog })
+  return async (blog: BlogFormModel) => {
+    await jsonServer.post('/blogposts', blog);
   }
 };
 
 const editBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
-  return (blog: BlogPost) => {
-    dispatch({ type: BLOG_ACTION_TYPE.Edit, payload: blog })
+  return async (blog: BlogPost) => {
+    await jsonServer.patch(`/blogposts/${blog.id}`, blog);
   }
 };
 
 const deleteBlogPost = (dispatch: React.Dispatch<ReducerAction>) => {
-  return (id: string) => {
-    dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: id })
+  return async (id: string) => {
+    await jsonServer.delete(`/blogposts/${id}`);
+    dispatch({ type: BLOG_ACTION_TYPE.Delete, payload: id });
   }
 };
 

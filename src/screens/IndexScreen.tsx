@@ -1,17 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { IndexScreenProps } from '../models/screen';
 import { BlogContext } from '../context/BlogContext';
 import { EvilIcons, Feather } from '@expo/vector-icons'
 import { SCREEN } from '../models';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const IndexScreen: React.FC<IndexScreenProps> = ({ navigation }) => {
   const { state: { data }, deleteBlogPost, getBlogPost } = useContext(BlogContext);
 
-  useEffect(() => {
+  // using useFocusEffect instead.
+  // useEffect(() => {
+  //   getBlogPost();
+  //
+  //   navigation.addListener('focus', () => {
+  //     getBlogPost();
+  //   })
+  //
+  // }, [getBlogPost, navigation]);
+
+  useFocusEffect(useCallback(() => {
     getBlogPost();
-  }, [getBlogPost]);
+  }, [getBlogPost]));
 
   useEffect(() => {
     navigation.setOptions({
